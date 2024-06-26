@@ -60,7 +60,7 @@ namespace Globetrotter {
         public TreasureMaps(Plugin plugin) {
             this.Plugin = plugin;
 
-            var acsPtr = this.Plugin.SigScanner.ScanText("48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 30 48 8B D9 49 8B F8 41 0F B7 08");
+            var acsPtr = this.Plugin.SigScanner.ScanText("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 41 56 41 57 48 83 EC 30 33 FF 48 8B D9");
             this._acsHook = this.Plugin.GameInteropProvider.HookFromAddress<HandleActorControlSelfDelegate>(acsPtr, this.OnACS);
             this._acsHook.Enable();
 
