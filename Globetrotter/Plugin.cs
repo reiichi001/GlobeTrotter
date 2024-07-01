@@ -14,7 +14,7 @@ namespace Globetrotter {
         internal static IPluginLog Log { get; private set; } = null!;
 
         [PluginService]
-        private DalamudPluginInterface Interface { get; init; } = null!;
+        private IDalamudPluginInterface Interface { get; init; } = null!;
 
         [PluginService]
         private ICommandManager CommandManager { get; init; } = null!;
