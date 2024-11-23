@@ -1,5 +1,5 @@
-﻿using Dalamud.Hooking;
-using Lumina.Excel.GeneratedSheets;
+using Dalamud.Hooking;
+using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace Globetrotter {
 
                 foreach (var rank in this.Plugin.DataManager.GetExcelSheet<TreasureHuntRank>()!) {
                     var unopened = rank.ItemName.Value;
-                    if (unopened == null) {
+                    if (unopened.RowId == 0) {
                         continue;
                     }
 
@@ -38,7 +38,7 @@ namespace Globetrotter {
                         continue;
                     }
 
-                    mapToRow[opened.RowId] = rank.RowId;
+                    mapToRow[opened.Value.RowId] = rank.RowId;
                 }
 
                 _mapToRow = mapToRow;
@@ -142,15 +142,11 @@ namespace Globetrotter {
                 return;
             }
 
-            var spot = this.Plugin.DataManager.GetExcelSheet<TreasureSpot>()!.GetRow(rowId, packet.SubRowId);
+            var spot = this.Plugin.DataManager.GetSubrowExcelSheet<TreasureSpot>()!.GetSubrow(rowId, (ushort)packet.SubRowId);
 
-            var loc = spot?.Location?.Value;
-            var map = loc?.Map?.Value;
-            var terr = map?.TerritoryType?.Value;
-
-            if (terr == null) {
-                return;
-            }
+            var loc = spot.Location.Value;
+            var map = loc.Map.Value;
+            var terr = map.TerritoryType.Value;
 
             var x = ToMapCoordinate(loc!.X, map!.SizeFactor);
             var y = ToMapCoordinate(loc.Z, map.SizeFactor);
