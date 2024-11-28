@@ -1,5 +1,5 @@
 ﻿using Dalamud.Hooking;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +20,9 @@ namespace Globetrotter {
 
                 var mapToRow = new Dictionary<uint, uint>();
 
-                foreach (var rank in this.Plugin.DataManager.GetExcelSheet<TreasureHuntRank>()!) {
+                foreach (var rank in this.Plugin.DataManager.GetExcelSheet<TreasureHuntRank>()) {
                     var unopened = rank.ItemName.Value;
-                    if (unopened == null) {
+                    if (unopened.RowId == 0) {
                         continue;
                     }
 
@@ -38,7 +38,7 @@ namespace Globetrotter {
                         continue;
                     }
 
-                    mapToRow[opened.RowId] = rank.RowId;
+                    mapToRow[opened.Value.RowId] = rank.RowId;
                 }
 
                 _mapToRow = mapToRow;
@@ -142,23 +142,23 @@ namespace Globetrotter {
                 return;
             }
 
-            var spot = this.Plugin.DataManager.GetExcelSheet<TreasureSpot>()!.GetRow(rowId, packet.SubRowId);
+            var spot = this.Plugin.DataManager.GetSubrowExcelSheet<TreasureSpot>().GetSubrowOrDefault(rowId, (ushort) packet.SubRowId);
 
-            var loc = spot?.Location?.Value;
-            var map = loc?.Map?.Value;
-            var terr = map?.TerritoryType?.Value;
+            var loc = spot?.Location.Value;
+            var map = loc?.Map.Value;
+            var terr = map?.TerritoryType.Value;
 
             if (terr == null) {
                 return;
             }
 
-            var x = ToMapCoordinate(loc!.X, map!.SizeFactor);
-            var y = ToMapCoordinate(loc.Z, map.SizeFactor);
+            var x = ToMapCoordinate(loc!.Value.X, map!.Value.SizeFactor);
+            var y = ToMapCoordinate(loc.Value.Z, map.Value.SizeFactor);
             var mapLink = new MapLinkPayload(
-                terr.RowId,
-                map.RowId,
-                ConvertMapCoordinateToRawPosition(x, map.SizeFactor),
-                ConvertMapCoordinateToRawPosition(y, map.SizeFactor)
+                terr.Value.RowId,
+                map.Value.RowId,
+                ConvertMapCoordinateToRawPosition(x, map.Value.SizeFactor),
+                ConvertMapCoordinateToRawPosition(y, map.Value.SizeFactor)
             );
 
             this.Plugin.GameGui.OpenMapWithMapLink(mapLink);
