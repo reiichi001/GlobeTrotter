@@ -1,4 +1,4 @@
-﻿using Dalamud.Hooking;
+using Dalamud.Hooking;
 using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
