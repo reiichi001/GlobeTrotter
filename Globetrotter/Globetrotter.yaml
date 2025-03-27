@@ -1,8 +1,8 @@
-﻿author: Anna
+﻿author: Anna, Maintained by chirp
 name: Globetrotter
 punchline: Automatically shows where treasure maps are located.
 description: |-
   Automatically shows where treasure maps are located.
 
   Icon: Map by Adrien Coquet from the Noun Project
-repo_url: https://git.anna.lgbt/anna/Globetrotter
+repo_url: https://github.com/chirpxiv/Globetrotter

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.2.12</Version>
-        <TargetFramework>net8-windows</TargetFramework>
+        <Version>1.2.13</Version>
+        <TargetFramework>net9-windows</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
@@ -37,6 +37,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="DalamudPackager" Version="11.0.0" />
+        <PackageReference Include="DalamudPackager" Version="12.0.0" />
     </ItemGroup>
 </Project>
